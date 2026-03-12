@@ -24,3 +24,5 @@ function desactivarModoDios()
     modoDios = false
     print("Modo dios DESACTIVADO")
 end
+print("EL SCRIPT SI SE EJECUTO")
+end
