@@ -26,3 +26,25 @@ function desactivarModoDios()
 end
 print("EL SCRIPT SI SE EJECUTO")
 end
+local seguir = false
+
+local jugador = {x = 0, y = 0}
+local objetivo = {x = 10, y = 5}
+
+function activar()
+    seguir = true
+    print("seguimiento activado")
+end
+
+function desactivar()
+    seguir = false
+    print("seguimiento desactivado")
+end
+
+function actualizar()
+    if seguir then
+        local dx = objetivo.x - jugador.x
+        local dy = objetivo.y - jugador.y
+        print("mirando al objetivo:", dx, dy)
+    end
+end
