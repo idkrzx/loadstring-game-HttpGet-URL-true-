@@ -1,0 +1,43 @@
+void OnGUI()
+{
+    if (enemy == null) return;
+
+    Vector3 screenPos = Camera.main.WorldToScreenPoint(enemy.position);
+
+    if (screenPos.z > 0) // solo si está enfrente
+    {
+        float hpPercent = enemy.health / enemy.maxHealth;
+
+        GUI.Label(new Rect(screenPos.x, Screen.height - screenPos.y, 100, 20),
+            enemy.name);
+
+        GUI.Box(new Rect(screenPos.x, Screen.height - screenPos.y + 15, 50 * hpPercent, 5),
+            "");
+    }
+}
+using UnityEngine;
+
+public class AimAssist : MonoBehaviour
+{
+    public float aimFOV = 200f;
+    public float smooth = 10f;
+    public Transform target;
+
+    void Update()
+    {
+        if (target == null) return;
+
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(target.position);
+        Vector2 center = new Vector2(Screen.width/2, Screen.height/2);
+
+        float dist = Vector2.Distance(new Vector2(screenPos.x, screenPos.y), center);
+
+        if (dist < aimFOV)
+        {
+            Vector3 dir = (target.position - transform.position).normalized;
+            Quaternion rot = Quaternion.LookRotation(dir);
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, rot, smooth * Time.deltaTime);
+        }
+    }
+}
